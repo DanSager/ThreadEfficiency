@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/ThreadEfficiency",
-            "args": ["10.11.21.11","2727"],
+            "args": ["-algo","12balls"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

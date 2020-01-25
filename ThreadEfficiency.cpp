@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include "ThreadEfficiency.hpp"
+#include "Params.hpp"
+#include "ExecuteSingle.hpp"
 
 params p;
 
@@ -17,6 +19,11 @@ int main(int argc, char *argv[])
 
     if (retVal == 1)
         exit(1);
+
+    if (p.threads == 1) {
+        ExecuteSingle es;
+        es.Initalize(p);
+    }
 
     return 0;
 }

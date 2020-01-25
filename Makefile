@@ -4,7 +4,7 @@ CC = g++
 CFLAGS = -g -I.
 LIBS = -lpthread
 
-SRCS := ThreadEfficiency.cpp ThreadEfficiency.hpp
+SRCS := ThreadEfficiency.cpp ThreadEfficiency.hpp ExecuteSingle.cpp ExecuteSingle.hpp WeighingBalls.cpp	WeighingBalls.hpp
 OBJS = $(patsubst %,objs/%.o,$(basename $(notdir $(SRCS))))
 
 objs/%.o: %.cpp
