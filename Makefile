@@ -2,18 +2,18 @@
 
 CC = g++
 CFLAGS = -g -I.
-LIBS = -lboost_system -lpthread -lboost_thread
+LIBS = -lpthread
 
-SRCS := main.cpp main.hpp
+SRCS := ThreadEfficiency.cpp ThreadEfficiency.hpp
 OBJS = $(patsubst %,objs/%.o,$(basename $(notdir $(SRCS))))
 
 objs/%.o: %.cpp
 	@echo Compiling C++ $(<F)
 	@g++ -fms-extensions -c -std=c++11 $(CFLAGS) -o objs/$(*F).o $< 
 
-all: objDir main
+all: objDir ThreadEfficiency
 
-main: $(OBJS)
+ThreadEfficiency: $(OBJS)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 clean:
