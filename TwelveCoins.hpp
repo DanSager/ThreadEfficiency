@@ -34,6 +34,7 @@ public:
     coin exec(std::vector<int> input);
     int validate(coin out, coin ans);
     std::vector<int> slice(std::vector<int> v, int m, int n);
+    int weigh(int a, int b);
     int weigh(std::vector<int> a, std::vector<int> b);
     int sum(std::vector<int> arr);
     int generate(int size);

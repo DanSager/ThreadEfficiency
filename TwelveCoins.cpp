@@ -84,30 +84,25 @@ coin TwelveCoins::exec(std::vector<int> input)
 {
     coin out;
     // initial initalization
-    std::vector<int> a,b,c, one, two;
-    a = slice(input,0,3);
-    b = slice(input,4,7);
-    c = slice(input,8,11);
+    std::vector<int> one, two;
+    one = slice(input,0,3);
+    two = slice(input,4,7);
 
     int weighOne, weighTwo, weighThree = 0;
-    weighOne = weigh(a,b);
+    weighOne = weigh(one,two);
     if (weighOne == 0) { // weigh one
         // A == B are not equal, problem ball exists in C
         one = slice(input,0,2);
         two = slice(input,8,10);
         weighTwo = weigh(one,two);
         if (weighTwo == 0) {
-            one = slice(input,0,0);
-            two = slice(input,11,11);
-            weighThree = weigh(one,two);
+            weighThree = weigh(input.at(0),input.at(11));
             if (weighThree == 1)
                 out.set(11,lighter);
             else if (weighThree == 2)
                 out.set(11,heavier);
         } else if (weighTwo == 1) {
-            one = slice(input,8,8);
-            two = slice(input,9,9);
-            weighThree = weigh(one,two);
+            weighThree = weigh(input.at(8),input.at(9));
             if (weighThree == 0)
                 out.set(10,lighter);
             else if (weighThree == 1)
@@ -115,9 +110,7 @@ coin TwelveCoins::exec(std::vector<int> input)
             else if (weighThree == 2)
                 out.set(8,lighter);
         } else if (weighTwo == 2) {
-            one = slice(input,8,8);
-            two = slice(input,9,9);
-            weighThree = weigh(one,two);
+            weighThree = weigh(input.at(8),input.at(9));
             if (weighThree == 0)
                 out.set(10,heavier);
             else if (weighThree == 1)
@@ -131,17 +124,13 @@ coin TwelveCoins::exec(std::vector<int> input)
         two = {input[5],input[2],input[3]};
         weighTwo = weigh(one,two);
         if (weighTwo == 0) {
-            one = slice(input,6,6);
-            two = slice(input,7,7);
-            weighThree = weigh(one,two);
+            weighThree = weigh(input.at(6),input.at(7));
             if (weighThree == 1)
                 out.set(7,lighter);
             else if (weighThree == 2)
                 out.set(6,lighter);
         } else if (weighTwo == 1) {
-            one = slice(input,0,0);
-            two = slice(input,1,1);
-            weighThree = weigh(one,two);
+            weighThree = weigh(input.at(0),input.at(1));
             if (weighThree == 0)
                 out.set(5,lighter);
             else if (weighThree == 1)
@@ -149,9 +138,7 @@ coin TwelveCoins::exec(std::vector<int> input)
             else if (weighThree == 2)
                 out.set(1,heavier);
         } else if (weighTwo == 2) {
-            one = slice(input,2,2);
-            two = slice(input,3,3);
-            weighThree = weigh(one,two);
+            weighThree = weigh(input.at(2),input.at(3));
             if (weighThree == 0)
                 out.set(4,lighter);
             else if (weighThree == 1)
@@ -165,17 +152,13 @@ coin TwelveCoins::exec(std::vector<int> input)
         two = {input[1],input[6],input[7]};
         weighTwo = weigh(one,two);
         if (weighTwo == 0) {
-            one = slice(input,2,2);
-            two = slice(input,3,3);
-            weighThree = weigh(one,two);
+            weighThree = weigh(input.at(2),input.at(3));
             if (weighThree == 1)
                 out.set(3,lighter);
             else if (weighThree == 2)
                 out.set(2,lighter);
         } else if (weighTwo == 1) {
-            one = slice(input,4,4);
-            two = slice(input,5,5);
-            weighThree = weigh(one,two);
+            weighThree = weigh(input.at(4),input.at(5));
             if (weighThree == 0)
                 out.set(1,lighter);
             else if (weighThree == 1)
@@ -183,9 +166,7 @@ coin TwelveCoins::exec(std::vector<int> input)
             else if (weighThree == 2)
                 out.set(5,heavier);
         } else if (weighTwo == 2) {
-            one = slice(input,6,6);
-            two = slice(input,7,7);
-            weighThree = weigh(one,two);
+            weighThree = weigh(input.at(6),input.at(7));
             if (weighThree == 0)
                 out.set(0,lighter);
             else if (weighThree == 1)
@@ -212,6 +193,18 @@ std::vector<int> TwelveCoins::slice(std::vector<int> v, int m, int n)
 
     std::vector<int> vec(first, last);
     return vec;
+}
+
+int TwelveCoins::weigh(int a, int b)
+{
+    if (a == b)
+        return 0;
+    else if (a > b)
+        return 1;
+    else if (a < b)
+        return 2;
+    else 
+        return 3;
 }
 
 int TwelveCoins::weigh(std::vector<int> a, std::vector<int> b)
