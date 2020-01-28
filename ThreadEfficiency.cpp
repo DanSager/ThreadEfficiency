@@ -46,10 +46,8 @@ int readCommandParams(int argc, char *argv[])
             value = argv[i];
             if (key != "") {
                 if (key == "algo") {
-                    if (value == "12balls")
-                        p.algoName = balls;
-                    else if (value == "floors")
-                        p.algoName = floors;
+                    if (value == "twelvecoins")
+                        p.algoName = coins;
                     else 
                         p.algoName = none;
                 }

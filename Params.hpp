@@ -9,7 +9,7 @@
 #ifndef Params_HPP
 #define Params_HPP
 
-enum algo {none, balls, floors};
+enum algo {none, coins};
 
 struct params {
     algo algoName = none;
