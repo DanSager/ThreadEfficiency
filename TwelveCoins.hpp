@@ -30,7 +30,9 @@ struct coin {
 
 class TwelveCoins {
 public:
-    void init();
+    std::vector<std::vector<int>> initInput();
+    std::vector<coin> initAnswers();
+    void runExec(std::vector<std::vector<int>> inpVect, std::vector<coin> ansVect);
     coin exec(std::vector<int> input);
     int validate(coin out, coin ans);
     std::vector<int> slice(std::vector<int> v, int m, int n);

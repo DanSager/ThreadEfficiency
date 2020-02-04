@@ -2,9 +2,9 @@
 
 CC = g++
 CFLAGS = -g -I.
-LIBS = -lpthread
+LIBS = -pthread -lpthread
 
-SRCS := ThreadEfficiency.cpp ThreadEfficiency.hpp ExecuteSingle.cpp ExecuteSingle.hpp TwelveCoins.cpp TwelveCoins.hpp
+SRCS := ThreadEfficiency.cpp ThreadEfficiency.hpp Execute.cpp Execute.hpp TwelveCoins.cpp TwelveCoins.hpp
 OBJS = $(patsubst %,objs/%.o,$(basename $(notdir $(SRCS))))
 
 objs/%.o: %.cpp

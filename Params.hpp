@@ -16,6 +16,7 @@ struct params {
     int threads = 1;
     bool threadpool = false;
     bool validate = true;
+    int buildCount = 0;
 };
 
 #endif // Params_HPP

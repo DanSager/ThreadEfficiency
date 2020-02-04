@@ -9,7 +9,7 @@
 #include <iostream>
 #include "ThreadEfficiency.hpp"
 #include "Params.hpp"
-#include "ExecuteSingle.hpp"
+#include "Execute.hpp"
 
 params p;
 
@@ -20,9 +20,11 @@ int main(int argc, char *argv[])
     if (retVal == 1)
         exit(1);
 
+    Execute es;
     if (p.threads == 1) {
-        ExecuteSingle es;
-        es.Initalize(p);
+        es.initalizeSingle(p);
+    } else if (p.threads > 1 && p.threads < 13) {
+        es.initalizeMulti(p);
     }
 
     return 0;
@@ -46,7 +48,7 @@ int readCommandParams(int argc, char *argv[])
             value = argv[i];
             if (key != "") {
                 if (key == "algo") {
-                    if (value == "twelvecoins")
+                    if (value == "coins")
                         p.algoName = coins;
                     else 
                         p.algoName = none;
@@ -55,6 +57,11 @@ int readCommandParams(int argc, char *argv[])
                     int threads = std::stoi(value);
                     if (threads > 1 && threads < 13)
                         p.threads = threads;
+                }
+                else if (key == "count") {
+                    int count = std::stoi(value);
+                    if (count > 0 && count < 999999999)
+                        p.buildCount = count;
                 }
             }
             key,value = "";
@@ -73,8 +80,9 @@ void printParamSettings()
 {
     std::cout
         << "Launching ThreadEfficiency Commands\n"
-        << "./ThreadEfficiency -algo <string> [-threads <n>] [-threadpool] [<-novalid]\n\n"
+        << "./ThreadEfficiency -algo <string> -count <n> [-threads <n>] [-threadpool] [<-novalid]\n\n"
         << "-algo : specify the algorithm to be used.\n"
+        << "-count : specify the number of times to execute the algo.\n"
         << "-threads : specify the amount of threads to be used. Default = 1\n"
         << "-threadpool : bool value if we should execute using a threadpool or not.\n"
         << "-novalid : bool value if we should validate the output.\n"

@@ -13,17 +13,16 @@
 #include <sstream> 
 #include <stdlib.h>
 #include <chrono>
+#include <unistd.h> //linux only //remove later
 #include "TwelveCoins.hpp"
 #include "Params.hpp"
 
 #define inputFile "input.txt"
 #define answerFile "answer.txt"
 
-void TwelveCoins::init()
+std::vector<std::vector<int>> TwelveCoins::initInput()
 {
     std::vector<std::vector<int>> inpVect;
-    std::vector<coin> ansVect;
-    int totalLines = 0;
 
     // Load Input Values
     std::ifstream inpFile(inputFile);
@@ -32,7 +31,6 @@ void TwelveCoins::init()
         if (inpLine[0] == '#') continue;
         if (inpLine[0] == '\n') continue;
         std::stringstream strStream(inpLine);
-        totalLines++;
         std::string temp; 
         std::vector<int> twelveweights; 
         while (!strStream.eof()) { 
@@ -44,7 +42,13 @@ void TwelveCoins::init()
         inpVect.push_back(twelveweights);
     }
 
-    // Load Correct Answers
+    return inpVect;
+}
+
+std::vector<coin> TwelveCoins::initAnswers()
+{
+    std::vector<coin> ansVect;
+
     std::ifstream ansFile(answerFile);
     std::string ansLine;
     while (std::getline(ansFile, ansLine)) {
@@ -60,12 +64,19 @@ void TwelveCoins::init()
     }
     ansFile.close();
 
+    return ansVect;
+}
+
+void TwelveCoins::runExec(std::vector<std::vector<int>> inpVect, std::vector<coin> ansVect)
+{
     // Execute the algo
     int i = 0;
     int correct = 0;
+    int totalLines = 0;
     std::chrono::microseconds duration = std::chrono::milliseconds(0);
     auto startTotal = std::chrono::high_resolution_clock::now();
     for (std::vector<std::vector<int>>::iterator it = inpVect.begin() ; it != inpVect.end(); ++it, ++i) {
+        totalLines++;
         std::vector<int> arr = *it;
         auto start = std::chrono::high_resolution_clock::now();
         coin out = exec(arr);
@@ -87,6 +98,8 @@ coin TwelveCoins::exec(std::vector<int> input)
     std::vector<int> one, two;
     one = slice(input,0,3);
     two = slice(input,4,7);
+
+    sleep(1);
 
     int weighOne, weighTwo, weighThree = 0;
     weighOne = weigh(one,two);
@@ -175,6 +188,7 @@ coin TwelveCoins::exec(std::vector<int> input)
                 out.set(7,heavier);
         }
     }
+    
     return out;
 }
 
