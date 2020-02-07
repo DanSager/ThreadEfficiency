@@ -4,8 +4,9 @@ CC = g++
 CFLAGS = -g -I.
 LIBS = -pthread -lpthread
 
-SRCS := ThreadEfficiency.cpp ThreadEfficiency.hpp Execute.cpp Execute.hpp TwelveCoins.cpp TwelveCoins.hpp
+SRCS := ThreadEfficiency.cpp ThreadEfficiency.hpp ExecuteCoins.cpp ExecuteCoins.hpp TwelveCoins.cpp TwelveCoins.hpp
 OBJS = $(patsubst %,objs/%.o,$(basename $(notdir $(SRCS))))
+DEPS = ThreadPool.h SafeQueue.h
 
 objs/%.o: %.cpp
 	@echo Compiling C++ $(<F)

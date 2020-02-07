@@ -21,7 +21,6 @@ struct coin {
 
     coin() {}
     coin(int i, int w) : index(i), weight(w) {}
-    //~coin();
 
     void set(int i, int w) { index=i; weight=w; }  //setter
     int getIndex() const { return index; }  //getter
@@ -34,7 +33,7 @@ public:
     std::vector<coin> initAnswers();
     void runExec(std::vector<std::vector<int>> inpVect, std::vector<coin> ansVect);
     coin exec(std::vector<int> input);
-    int validate(coin out, coin ans);
+    bool validate(coin out, coin ans);
     std::vector<int> slice(std::vector<int> v, int m, int n);
     int weigh(int a, int b);
     int weigh(std::vector<int> a, std::vector<int> b);

@@ -9,7 +9,7 @@
 #include <iostream>
 #include "ThreadEfficiency.hpp"
 #include "Params.hpp"
-#include "Execute.hpp"
+#include "ExecuteCoins.hpp"
 
 params p;
 
@@ -20,11 +20,13 @@ int main(int argc, char *argv[])
     if (retVal == 1)
         exit(1);
 
-    Execute es;
+    ExecuteCoins ec;
     if (p.threads == 1) {
-        es.initalizeSingle(p);
-    } else if (p.threads > 1 && p.threads < 13) {
-        es.initalizeMulti(p);
+        ec.initializeSingle(p);
+    } else if (p.threads > 1 && p.threads < 13 && p.threadpool == false) {
+        ec.initializeMulti(p);
+    } else if (p.threads > 1 && p.threads < 100 && p.threadpool == true) {
+        ec.initializePool(p);
     }
 
     return 0;
@@ -42,8 +44,6 @@ int readCommandParams(int argc, char *argv[])
             key = &argv[i][1];
             if (key == "threadpool")
                 p.threadpool = true;
-            if (key == "novalid")
-                p.validate = false;
         } else { // value
             value = argv[i];
             if (key != "") {
@@ -55,7 +55,7 @@ int readCommandParams(int argc, char *argv[])
                 }
                 else if (key == "threads") {
                     int threads = std::stoi(value);
-                    if (threads > 1 && threads < 13)
+                    if (threads > 1 && threads < 100)
                         p.threads = threads;
                 }
                 else if (key == "count") {
@@ -85,7 +85,6 @@ void printParamSettings()
         << "-count : specify the number of times to execute the algo.\n"
         << "-threads : specify the amount of threads to be used. Default = 1\n"
         << "-threadpool : bool value if we should execute using a threadpool or not.\n"
-        << "-novalid : bool value if we should validate the output.\n"
         << std::endl;
 }
 
@@ -95,6 +94,5 @@ int printParams()
     std::cout << "algoName =" << p.algoName << ", ";
     std::cout << "threads =" << p.threads << ", ";
     std::cout << "threadpool =" << p.threadpool << ", ";
-    std::cout << "validate =" << p.validate << std::endl;
     return 0;
 }

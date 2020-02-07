@@ -15,7 +15,6 @@ struct params {
     algo algoName = none;
     int threads = 1;
     bool threadpool = false;
-    bool validate = true;
     int buildCount = 0;
 };
 
