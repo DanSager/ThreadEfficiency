@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/ThreadEfficiency",
-            "args": ["-algo","coins","-count","32","-threads","10"],
+            "args": ["-algo","merge","-count","8","-threads","2"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

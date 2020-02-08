@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include <vector>
-#include <iostream>
 #include <fstream>
 #include <sstream> 
 #include <stdlib.h>
@@ -302,8 +301,8 @@ int TwelveCoins::generate(int size)
         int randIndex = -1;
         int randWeight = normalWeight;
         //while (randWeight == normalWeight)
-            randWeight = std::rand() % 21; // range from 1 to 20 0,1,2,3,4,5,6,7,8,9 11,12,13,14,15,16,17,18,19,20
-        randIndex = std::rand() % 11;
+            randWeight = std::rand() % 21; // range from 0 to 20 0,1,2,3,4,5,6,7,8,9 11,12,13,14,15,16,17,18,19,20
+        randIndex = std::rand() % 12; // 0,1,2,3,4,5,6,7,8,9,10,11
         for (int i = 0; i < 12; i++) {
             if (i == randIndex)
                 myinput << randWeight << " ";

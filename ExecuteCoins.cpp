@@ -36,14 +36,15 @@ int numCorrect = 0;         // tallies up number of numCorrect outputs
 void ExecuteCoins::initializeSingle(params p)
 {
     std::cout << "SingleThreading" << std::endl;
-    twelvecoins.generate(p.buildCount);
+    if (p.generateNew) twelvecoins.generate(p.buildCount);
     std::vector<std::vector<int>> inpVect = twelvecoins.initInput();
     std::vector<coin> ansVect = twelvecoins.initAnswers();
+    int size = std::min((int)ansVect.size(),p.buildCount);
 
     // Execute the algo
     int i = 0;
     auto startTotal = std::chrono::high_resolution_clock::now();
-    for (std::vector<std::vector<int>>::iterator it = inpVect.begin() ; it != inpVect.end(); ++it, ++i) {
+    for (std::vector<std::vector<int>>::iterator it = inpVect.begin() ; it != inpVect.end() && i < size; ++it, ++i) {
         std::vector<int> arr = *it;
         auto startAlgo = std::chrono::high_resolution_clock::now();
         coin out = twelvecoins.exec(arr);
@@ -53,7 +54,7 @@ void ExecuteCoins::initializeSingle(params p)
     }
     auto stopTotal = std::chrono::high_resolution_clock::now();
     durationTotal = std::chrono::duration_cast<std::chrono::microseconds>(stopTotal - startTotal);
-    printStats(p.buildCount);
+    printStats(size);
 }
 
 /**
@@ -90,9 +91,10 @@ void ExecuteCoins::initializeMulti(params p)
     std::cout << "Multithreading" << std::endl;
     sem_init(&sem,0,p.threads);
 
-    twelvecoins.generate(p.buildCount);
+    if (p.generateNew) twelvecoins.generate(p.buildCount);
     std::vector<std::vector<int>> inpVect = twelvecoins.initInput();
     std::vector<coin> ansVect = twelvecoins.initAnswers();
+    int size = std::min((int)ansVect.size(),p.buildCount);
 
     // Execute the algo
     auto startTotal = std::chrono::high_resolution_clock::now();
@@ -102,8 +104,8 @@ void ExecuteCoins::initializeMulti(params p)
     *  where the thread vector has a max, once it hit, it will join all threads
     *  and then repeat. Avoiding the vector becoming too large. */ 
     int count = 0;
-    while (count < p.buildCount) {
-        std::vector<std::thread> threads(std::min(10000,(p.buildCount-count)));
+    while (count < size) {
+        std::vector<std::thread> threads(std::min(10000,(size-count)));
         for (size_t i = 0; i < threads.size(); ++i) {
             sem_wait(&sem); // Limits the active number of threads to equal p.threads
             std::vector<int> arr = inpVect.at(count+i); // .at() is O(1) time complexity
@@ -118,7 +120,7 @@ void ExecuteCoins::initializeMulti(params p)
 
     auto stopTotal = std::chrono::high_resolution_clock::now();
     durationTotal = std::chrono::duration_cast<std::chrono::microseconds>(stopTotal - startTotal);
-    printStats(p.buildCount);
+    printStats(size);
     sem_destroy(&sem);
 }
 
@@ -137,15 +139,16 @@ void ExecuteCoins::initializePool(params p)
 
     sem_init(&sem,0,p.threads);
 
-    twelvecoins.generate(p.buildCount);
+    if (p.generateNew) twelvecoins.generate(p.buildCount);
     std::vector<std::vector<int>> inpVect = twelvecoins.initInput();
     std::vector<coin> ansVect = twelvecoins.initAnswers();
+    int size = std::min((int)ansVect.size(),p.buildCount);
 
     // Execute the algo
     int i = 0;
     auto startTotal = std::chrono::high_resolution_clock::now();
 
-    for (std::vector<std::vector<int>>::iterator it = inpVect.begin() ; it != inpVect.end(); ++it, ++i) {
+    for (std::vector<std::vector<int>>::iterator it = inpVect.begin() ; it != inpVect.end() && i < size; ++it, ++i) {
         sem_wait(&sem);
         std::vector<int> arr = *it;
         coin ans = ansVect.at(i);
@@ -158,7 +161,7 @@ void ExecuteCoins::initializePool(params p)
 
     auto stopTotal = std::chrono::high_resolution_clock::now();
     durationTotal = std::chrono::duration_cast<std::chrono::microseconds>(stopTotal - startTotal);
-    printStats(p.buildCount);
+    printStats(size);
     sem_destroy(&sem);
 }
 

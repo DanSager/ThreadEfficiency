@@ -1,4 +1,4 @@
-// Code found at https://github.com/mtrebi/thread-pool/blob/master/README.md#usage-example
+// Code found at https://github.com/mtrebi/thread-pool
 
 #pragma once
 

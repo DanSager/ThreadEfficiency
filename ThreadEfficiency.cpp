@@ -10,6 +10,7 @@
 #include "ThreadEfficiency.hpp"
 #include "Params.hpp"
 #include "ExecuteCoins.hpp"
+#include "MergeSort.hpp"
 
 params p;
 
@@ -20,13 +21,18 @@ int main(int argc, char *argv[])
     if (retVal == 1)
         exit(1);
 
-    ExecuteCoins ec;
-    if (p.threads == 1) {
-        ec.initializeSingle(p);
-    } else if (p.threads > 1 && p.threads < 13 && p.threadpool == false) {
-        ec.initializeMulti(p);
-    } else if (p.threads > 1 && p.threads < 100 && p.threadpool == true) {
-        ec.initializePool(p);
+    if (p.algoName == coins) {
+        ExecuteCoins ec;
+        if (p.threads == 1) {
+            ec.initializeSingle(p);
+        } else if (p.threads > 1 && p.threads < 13 && p.threadpool == false) {
+            ec.initializeMulti(p);
+        } else if (p.threads > 1 && p.threads < 13 && p.threadpool == true) {
+            ec.initializePool(p);
+        }
+    } else if (p.algoName == merge) {
+        MergeSort ms;
+        ms.init(p);
     }
 
     return 0;
@@ -44,18 +50,22 @@ int readCommandParams(int argc, char *argv[])
             key = &argv[i][1];
             if (key == "threadpool")
                 p.threadpool = true;
+            else if (key == "generate")
+                p.generateNew = true;
         } else { // value
             value = argv[i];
             if (key != "") {
                 if (key == "algo") {
                     if (value == "coins")
                         p.algoName = coins;
-                    else 
+                    else if (value == "merge")
+                        p.algoName = merge;
+                    else
                         p.algoName = none;
                 }
                 else if (key == "threads") {
                     int threads = std::stoi(value);
-                    if (threads > 1 && threads < 100)
+                    if (threads > 1 && threads < 13)
                         p.threads = threads;
                 }
                 else if (key == "count") {
@@ -80,11 +90,12 @@ void printParamSettings()
 {
     std::cout
         << "Launching ThreadEfficiency Commands\n"
-        << "./ThreadEfficiency -algo <string> -count <n> [-threads <n>] [-threadpool] [<-novalid]\n\n"
+        << "./ThreadEfficiency -algo <string> -count <n> [-threads <n>] [-threadpool] [<-generate]\n\n"
         << "-algo : specify the algorithm to be used.\n"
         << "-count : specify the number of times to execute the algo.\n"
         << "-threads : specify the amount of threads to be used. Default = 1\n"
         << "-threadpool : bool value if we should execute using a threadpool or not.\n"
+        << "-generate : bool value if we should generate new inputs or use existing input values\n"
         << std::endl;
 }
 
@@ -92,7 +103,9 @@ int printParams()
 {
     std::cout << "Launch params: ";
     std::cout << "algoName =" << p.algoName << ", ";
+    std::cout << "count =" << p.buildCount << ", ";
     std::cout << "threads =" << p.threads << ", ";
     std::cout << "threadpool =" << p.threadpool << ", ";
+    std::cout << "generate =" << p.generateNew << "\n";
     return 0;
 }
