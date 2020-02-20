@@ -1,16 +1,19 @@
 .PHONY: objDir clean
 
 CC = g++
-CFLAGS = -g -I.
+CFLAGS = -g -I. -I./coins/ -I./sort/
 LIBS = -pthread -lpthread
 
-SRCS := ThreadEfficiency.cpp ThreadEfficiency.hpp ExecuteCoins.cpp ExecuteCoins.hpp TwelveCoins.cpp TwelveCoins.hpp MergeSort.cpp MergeSort.hpp
-OBJS = $(patsubst %,objs/%.o,$(basename $(notdir $(SRCS))))
+SRCS = $(wildcard *.cpp) $(wildcard */*.cpp)
+# SRCS = ThreadEfficiency.cpp ThreadEfficiency.hpp ExecuteCoins.cpp ExecuteCoins.hpp TwelveCoins.cpp TwelveCoins.hpp MergeSort.cpp MergeSort.hpp
+# OBJS = $(patsubst %.cpp,objs/%.o,$(SRCS))
+OBJS = $(SRCS:%.cpp=objs/%.o)
 DEPS = ThreadPool.h SafeQueue.h
 
 objs/%.o: %.cpp
 	@echo Compiling C++ $(<F)
-	@g++ -fms-extensions -c -std=c++11 $(CFLAGS) -o objs/$(*F).o $< 
+	@mkdir -p '$(@D)'
+	@g++ -fms-extensions -c -std=c++11 $(CFLAGS) $< -o $@
 
 all: objDir ThreadEfficiency
 

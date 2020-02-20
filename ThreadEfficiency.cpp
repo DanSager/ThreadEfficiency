@@ -6,17 +6,20 @@
  * @author: Dan Sager
  */
 
+#include <chrono>
 #include <iostream>
-#include "ThreadEfficiency.hpp"
-#include "Params.hpp"
+#include <fstream>
 #include "ExecuteCoins.hpp"
-#include "MergeSort.hpp"
-
-params p;
+#include "ExecuteMerge.hpp"
+#include "ThreadEfficiency.hpp"
 
 int main(int argc, char *argv[])
 {
-    int retVal = readCommandParams(argc, argv);
+    params p;
+    results r;
+
+    int retVal = readCommandParams(p, argc, argv);
+    printParams(p, std::cout);
 
     if (retVal == 1)
         exit(1);
@@ -24,21 +27,31 @@ int main(int argc, char *argv[])
     if (p.algoName == coins) {
         ExecuteCoins ec;
         if (p.threads == 1) {
-            ec.initializeSingle(p);
+            r = ec.initializeSingle(p);
         } else if (p.threads > 1 && p.threads < 13 && p.threadpool == false) {
-            ec.initializeMulti(p);
+            r = ec.initializeMulti(p);
         } else if (p.threads > 1 && p.threads < 13 && p.threadpool == true) {
-            ec.initializePool(p);
+            r = ec.initializePool(p);
         }
     } else if (p.algoName == merge) {
-        MergeSort ms;
-        ms.init(p);
+        ExecuteMerge em;
+        if (p.threads == 1)
+            r = em.executeSingle(p);
+        else if (p.threads > 1 && p.threads < 13)
+            r = em.executeMulti(p);
     }
 
+    printStats(p, r,std::cout);
+    std::ofstream log(LOGFILE, std::ios::app);
+    printParams(p, log);
+    printStats(p, r,log);
+    log.close();
+    
     return 0;
+    
 }
 
-int readCommandParams(int argc, char *argv[])
+int readCommandParams(params& p, int argc, char *argv[])
 {
     if (argc == 0) { // display default message
         printParamSettings();
@@ -60,6 +73,8 @@ int readCommandParams(int argc, char *argv[])
                         p.algoName = coins;
                     else if (value == "merge")
                         p.algoName = merge;
+                    else if (value == "mergeMulti")
+                        p.algoName = mergeMulti;
                     else
                         p.algoName = none;
                 }
@@ -71,7 +86,7 @@ int readCommandParams(int argc, char *argv[])
                 else if (key == "count") {
                     int count = std::stoi(value);
                     if (count > 0 && count < 999999999)
-                        p.buildCount = count;
+                        p.count = count;
                 }
             }
             key,value = "";
@@ -81,8 +96,6 @@ int readCommandParams(int argc, char *argv[])
         printParamSettings();
         return 1;
     }
-
-    printParams();
     return 0;
 }
 
@@ -99,13 +112,30 @@ void printParamSettings()
         << std::endl;
 }
 
-int printParams()
+int printParams(params& p, std::ostream& os)
 {
-    std::cout << "Launch params: ";
-    std::cout << "algoName =" << p.algoName << ", ";
-    std::cout << "count =" << p.buildCount << ", ";
-    std::cout << "threads =" << p.threads << ", ";
-    std::cout << "threadpool =" << p.threadpool << ", ";
-    std::cout << "generate =" << p.generateNew << "\n";
+    auto time = std::chrono::system_clock::now();
+    std::time_t now = std::chrono::system_clock::to_time_t(time);
+    os << "Executing version " << VERSION_NUM << " at " << std::ctime(&now);
+    os  << "Parameters: "
+        << "algo = " << p.algoName << ", "
+        << "count = " << p.count << ", "
+        << "threads = " << p.threads << ", "
+        << "threadpool = " << p.threadpool << ", "
+        << "generate = " << p.generateNew << "\n";
     return 0;
+}
+
+/* 
+*  Note:   durationExec is longer than durationTotal in multithreading applications because
+*            durationExec time occurs simultanously and is added up, where durationTotal is
+*            simply start to finish.
+*  @brief: prints stats about the algorithm execution post execution
+*/
+void printStats(params& p, results r, std::ostream& os) {
+    if (r.algoDuration.count() != 0) 
+        os << r.algoDuration.count() << " microseconds" << " - Time taken by the algorithm.\n";
+    if (r.functDuration.count() != 0) 
+        os << r.functDuration.count() << " microseconds" << " - Time taken to execute algorithm & supporting functions.\n";
+    os << "Correct: " << r.correct << ", Total Files: " << p.count << "\n\n";
 }

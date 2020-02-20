@@ -15,9 +15,9 @@
 
 class ExecuteCoins {
 public:
-    void initializeSingle(params p);
-    void initializeMulti(params p);
-    void initializePool(params p);
+    results initializeSingle(params p);
+    results initializeMulti(params p);
+    results initializePool(params p);
 
 private:
     void printStats(int numTotal);

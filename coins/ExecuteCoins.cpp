@@ -18,6 +18,7 @@
 #include "TwelveCoins.hpp"
 
 TwelveCoins twelvecoins;
+results r;
 //Multithread Variables
 std::mutex mtx;             // prevents updating global variables simulationously
 sem_t sem;                  // counting semaphore to regulate number of active threads
@@ -33,13 +34,12 @@ int numCorrect = 0;         // tallies up number of numCorrect outputs
  *         We then load both files into vectors so that their entire x amount of inputs
  *           can be iterated upon.
  */
-void ExecuteCoins::initializeSingle(params p)
+results ExecuteCoins::initializeSingle(params p)
 {
-    std::cout << "SingleThreading" << std::endl;
-    if (p.generateNew) twelvecoins.generate(p.buildCount);
+    if (p.generateNew) twelvecoins.generate(p.count);
     std::vector<std::vector<int>> inpVect = twelvecoins.initInput();
     std::vector<coin> ansVect = twelvecoins.initAnswers();
-    int size = std::min((int)ansVect.size(),p.buildCount);
+    int size = std::min((int)ansVect.size(),p.count);
 
     // Execute the algo
     int i = 0;
@@ -54,7 +54,10 @@ void ExecuteCoins::initializeSingle(params p)
     }
     auto stopTotal = std::chrono::high_resolution_clock::now();
     durationTotal = std::chrono::duration_cast<std::chrono::microseconds>(stopTotal - startTotal);
-    printStats(size);
+    r.correct = numCorrect;
+    r.algoDuration = durationExec;
+    r.functDuration = durationTotal;
+    return r;
 }
 
 /**
@@ -86,15 +89,14 @@ void execMulti(std::vector<int> arr, coin ans)
  *         Uses a semaphore for thread count regulation. sem_wait slowly decremented until
  *         it reaches 0, at which point, no new threads will be deployed.
  */
-void ExecuteCoins::initializeMulti(params p)
+results ExecuteCoins::initializeMulti(params p)
 {
-    std::cout << "Multithreading" << std::endl;
     sem_init(&sem,0,p.threads);
 
-    if (p.generateNew) twelvecoins.generate(p.buildCount);
+    if (p.generateNew) twelvecoins.generate(p.count);
     std::vector<std::vector<int>> inpVect = twelvecoins.initInput();
     std::vector<coin> ansVect = twelvecoins.initAnswers();
-    int size = std::min((int)ansVect.size(),p.buildCount);
+    int size = std::min((int)ansVect.size(),p.count);
 
     // Execute the algo
     auto startTotal = std::chrono::high_resolution_clock::now();
@@ -120,8 +122,11 @@ void ExecuteCoins::initializeMulti(params p)
 
     auto stopTotal = std::chrono::high_resolution_clock::now();
     durationTotal = std::chrono::duration_cast<std::chrono::microseconds>(stopTotal - startTotal);
-    printStats(size);
     sem_destroy(&sem);
+    r.correct = numCorrect;
+    r.algoDuration = durationExec;
+    r.functDuration = durationTotal;
+    return r;
 }
 
 /**
@@ -130,19 +135,17 @@ void ExecuteCoins::initializeMulti(params p)
  *         ThreadPool is implemented from https://github.com/mtrebi/thread-pool.
  *         Uses a semaphore for thread count regulation. Used more in initalizeMulti.
  */
-void ExecuteCoins::initializePool(params p)
+results ExecuteCoins::initializePool(params p)
 {
-    std::cout << "ThreadPool" << std::endl;
-
     ThreadPool pool(p.threads); // Create pool with specified thread count
     pool.init(); // Initialize pool
 
     sem_init(&sem,0,p.threads);
 
-    if (p.generateNew) twelvecoins.generate(p.buildCount);
+    if (p.generateNew) twelvecoins.generate(p.count);
     std::vector<std::vector<int>> inpVect = twelvecoins.initInput();
     std::vector<coin> ansVect = twelvecoins.initAnswers();
-    int size = std::min((int)ansVect.size(),p.buildCount);
+    int size = std::min((int)ansVect.size(),p.count);
 
     // Execute the algo
     int i = 0;
@@ -161,18 +164,9 @@ void ExecuteCoins::initializePool(params p)
 
     auto stopTotal = std::chrono::high_resolution_clock::now();
     durationTotal = std::chrono::duration_cast<std::chrono::microseconds>(stopTotal - startTotal);
-    printStats(size);
     sem_destroy(&sem);
-}
-
-/* 
-*  Note:   durationExec is longer than durationTotal in multithreading applications because
-*            durationExec time occurs simultanously and is added up, where durationTotal is
-*            simply start to finish.
-*  @brief: prints stats about the algorithm execution post execution
-*/
-void ExecuteCoins::printStats(int numTotal) {
-    std::cout << durationExec.count() << " microseconds" << " - Time taken by the coins algorithm." << std::endl;
-    std::cout << durationTotal.count() << " microseconds" << " - Time taken to execute algorithm & supporting functions." << std::endl;
-    std::cout << "numCorrect: " << numCorrect << ", numTotal: " << numTotal << std::endl;
+    r.correct = numCorrect;
+    r.algoDuration = durationExec;
+    r.functDuration = durationTotal;
+    return r;
 }

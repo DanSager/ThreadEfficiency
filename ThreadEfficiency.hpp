@@ -9,8 +9,11 @@
 #ifndef ThreadEfficiency_HPP
 #define ThreadEfficiency_HPP
 
-int readCommandParams(int argc, char *argv[]);
+#include "Params.hpp"
+
+int readCommandParams(params& p, int argc, char *argv[]);
 void printParamSettings();
-int printParams();
+int printParams(params& p, std::ostream& os);
+void printStats(params& p, results r, std::ostream& os);
 
 #endif // ThreadEfficiency_HPP

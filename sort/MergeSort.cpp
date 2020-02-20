@@ -8,21 +8,14 @@
 
 #include <iostream>
 #include <stdlib.h>
-#include <chrono>
-#include <thread>
-#include <mutex>
 #include <semaphore.h> //linux only
 #include "MergeSort.hpp"
 
-using namespace std;
-
 const int MAX_INT = 65536;
-std::mutex myLock;             // prevents updating global variables simulationously
-vector<int> multiThreadVect;
 
-vector<int> MergeSort::merge(vector<int> left, vector<int> right)
+std::vector<int> MergeSort::merge(std::vector<int> left, std::vector<int> right)
 {
-    vector<int> result;
+    std::vector<int> result;
     while ((int)left.size() > 0 || (int)right.size() > 0) {
         if ((int)left.size() > 0 && (int)right.size() > 0) {
             if ((int)left.front() <= (int)right.front()) {
@@ -46,7 +39,7 @@ vector<int> MergeSort::merge(vector<int> left, vector<int> right)
     return result;
 }
 
-vector<int> MergeSort::slice(vector<int> v, int left, int right)
+std::vector<int> MergeSort::slice(std::vector<int> v, int left, int right)
 {
     auto first = v.cbegin() + left;
     auto last = v.cbegin() + right;
@@ -55,29 +48,29 @@ vector<int> MergeSort::slice(vector<int> v, int left, int right)
     return vec;
 }
 
-vector<int> MergeSort::mSort(vector<int> vect)
+std::vector<int> MergeSort::mergeSort(std::vector<int> vect)
 {
     int size = (int)vect.size();
     if (size <= 1)
         return vect;
 
-    vector<int> left, right, result;
+    std::vector<int> left, right, result;
 
     int middle = (size+1)/2;
 
     left = slice(vect,0,middle);
     right = slice(vect,middle,size);
 
-    left = mSort(left);
-    right = mSort(right);
+    left = mergeSort(left);
+    right = mergeSort(right);
     result = merge(left,right);
 
     return result;
 }
 
-vector<int> MergeSort::generateVect(int size)
+std::vector<int> MergeSort::generateVect(int size)
 {
-    vector<int> intVect(size);
+    std::vector<int> intVect(size);
     srand(time(NULL));
     int i = 0;
     while (i < size) {
@@ -88,26 +81,27 @@ vector<int> MergeSort::generateVect(int size)
     return intVect;
 }
 
-bool MergeSort::validateSorted(vector<int> v, int size)
+int MergeSort::validateSorted(std::vector<int> v, int size)
 {
+    int correctlySortedWithoutIssue = 0, previous = 0;
     if (v.size() != size)
-        return false;
-    int previous = 0;
+        return correctlySortedWithoutIssue;
     for (int i : v) {
         if (i < previous)
-            return false;
+            return correctlySortedWithoutIssue;
         previous = i;
+        correctlySortedWithoutIssue++;
     }
-    return true;
+    return correctlySortedWithoutIssue;
 }
 
-void MergeSort::printVect(vector<int> intVect)
+void MergeSort::printVect(std::vector<int> intVect)
 {
-    for (int i = 0; i < intVect.size(); ++i) cout << intVect[i] << " ";
-    cout << "\n";
+    for (int i = 0; i < intVect.size(); ++i) std::cout << intVect[i] << " ";
+    std::cout << "\n";
 }
 
-std::vector<std::vector<int>> SplitVector(const std::vector<int>& vec, size_t n)
+std::vector<std::vector<int>> MergeSort::SplitVector(const std::vector<int>& vec, size_t n)
 {
     std::vector<std::vector<int>> outVec;
 
@@ -127,57 +121,6 @@ std::vector<std::vector<int>> SplitVector(const std::vector<int>& vec, size_t n)
     }
 
     return outVec;
-}
-
-void execM(vector<int> v)
-{
-    MergeSort m;
-    v = m.mSort(v);
-    myLock.lock();
-    multiThreadVect = m.merge(multiThreadVect,v);
-    myLock.unlock();
-}
-
-void MergeSort::execMulti(params p, vector<int> v)
-{
-    std::cout << "Multithreading" << std::endl;
-    vector<vector<int>> splits(p.threads);
-
-    splits = SplitVector(v,p.threads);
-    std::cout << "splits size: " << splits.size() << std::endl;
-
-    std::vector<std::thread> threads(p.threads);
-    for (int i = 0; i < p.threads; ++i) {
-        threads[i] = std::thread(execM,splits[i]);
-    }
-
-    for (int i = 0; i < p.threads; ++i) {
-        threads[i].join();
-    }
-
-    std::cout << "Sorted: " << validateSorted(multiThreadVect,multiThreadVect.size()) << std::endl;
-}
-
-void MergeSort::init(params p)
-{
-    vector<int> v = generateVect(p.buildCount);
-    int size = v.size();
-    std::chrono::_V2::system_clock::time_point startAlgo, stopAlgo;// = std::chrono::high_resolution_clock::now();
-    //printVect(v);
-    if (p.threads == 1) {
-        startAlgo = std::chrono::high_resolution_clock::now();
-        v = mSort(v);
-        std::cout << "Sorted: " << validateSorted(v, size) << std::endl;
-        stopAlgo = std::chrono::high_resolution_clock::now();
-    } else {
-        startAlgo = std::chrono::high_resolution_clock::now();
-        execMulti(p,v);
-        stopAlgo = std::chrono::high_resolution_clock::now();
-    }
-    //printVect(v);
-    auto durationAlgo = std::chrono::duration_cast<std::chrono::microseconds>(stopAlgo - startAlgo);
-    std::cout << durationAlgo.count() << " microseconds" << " - Time taken by merge sort algorithm." << std::endl;
-    
 }
 
 /*

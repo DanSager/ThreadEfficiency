@@ -15,13 +15,14 @@
 class MergeSort {
 public:
     std::vector<int> merge(std::vector<int> left, std::vector<int> right);
-    std::vector<int> mSort(std::vector<int> vect);
+    std::vector<int> mergeSort(std::vector<int> vect);
     std::vector<int> generateVect(int size);
     void execMulti(params p, std::vector<int> v);
-    void init(params p);
+    results init(params p);
+    std::vector<std::vector<int>> SplitVector(const std::vector<int>& vec, size_t n);
+    int validateSorted(std::vector<int> v, int size);
 private:
     std::vector<int> slice(std::vector<int> v, int left, int right);
-    bool validateSorted(std::vector<int> v, int size);
     void printVect(std::vector<int>);
 };
 

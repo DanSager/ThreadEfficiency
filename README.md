@@ -2,7 +2,6 @@
 ## Table of Contents
 
 * [About the Project](#about-the-project)
-<!--  * [Built With](#built-with) -->
 * [Getting Started](#getting-started)
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
@@ -11,12 +10,12 @@
   * [Required Arguments](#prerequisites)
   * [Optional Arguments](#installation)
 * [Roadmap](#roadmap)
-<!-- * [Contributing](#contributing) -->
 * [License](#license)
 * [Contact](#contact)
 * [Acknowledgements](#acknowledgements)
 
-
+<!-- * [Built With](#built-with) -->
+<!-- * [Contributing](#contributing) -->
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project

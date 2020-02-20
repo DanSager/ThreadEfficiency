@@ -17,9 +17,6 @@
 #include "TwelveCoins.hpp"
 #include "Params.hpp"
 
-#define INPUTFILE "input.txt"
-#define ANSWERFILE "answer.txt"
-
 /**
  * @brief: Loads the input file into a vector of type int vector. Each line in the file contains 
  *           12 numbers. Each represents a weight of the coins being weighed against each other.
@@ -35,7 +32,7 @@ std::vector<std::vector<int>> TwelveCoins::initInput()
     std::vector<std::vector<int>> inpVect;
 
     // Load Input Values
-    std::ifstream inpFile(INPUTFILE);
+    std::ifstream inpFile(COINSINPUTFILE);
     std::string inpLine;
     while (std::getline(inpFile, inpLine)) {
         if (inpLine[0] == '#') continue;
@@ -66,7 +63,7 @@ std::vector<coin> TwelveCoins::initAnswers()
 {
     std::vector<coin> ansVect;
 
-    std::ifstream ansFile(ANSWERFILE);
+    std::ifstream ansFile(COINSANSWERFILE);
     std::string ansLine;
     while (std::getline(ansFile, ansLine)) {
         if (ansLine[0] == '#') continue;
@@ -292,8 +289,8 @@ int TwelveCoins::sum(std::vector<int> arr)
 int TwelveCoins::generate(int size)
 {
     std::ofstream myinput, myanswer;
-    myinput.open (INPUTFILE);
-    myanswer.open (ANSWERFILE);
+    myinput.open (COINSINPUTFILE);
+    myanswer.open (COINSANSWERFILE);
     srand(time(NULL));
     myinput << "# Generate input of size: " << size << "\n";
     myanswer << "# Generate answer of size: " << size << "\n";
