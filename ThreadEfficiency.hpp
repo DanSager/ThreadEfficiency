@@ -11,7 +11,7 @@
 
 #include "Params.hpp"
 
-int readCommandParams(params& p, int argc, char *argv[]);
+int readCommandParams(params& p, int argc, char *argv[], std::string& algoname);
 void printParamSettings();
 int printParams(params& p, std::ostream& os);
 void printStats(params& p, results r, std::ostream& os);

@@ -16,7 +16,7 @@
 #include "MergeSort.hpp"
 
 MergeSort ms;
-std::mutex myLock;             // prevents updating global variables simulationously
+std::mutex myLock;
 std::vector<int> multiThreadVect;
 std::vector<std::vector<int>> sortedVects;
 
@@ -27,7 +27,16 @@ results ExecuteMerge::executeSingle(params p)
     std::chrono::_V2::system_clock::time_point startFunction, stopFunction, startAlgorithm, stopAlgorithm;
     startFunction = std::chrono::high_resolution_clock::now();
 
-    std::vector<int> v = ms.generateVect(p.count);
+    std::vector<int> v;
+
+    if (p.generateNew)
+        v = ms.generateVect(p.count);
+    else {
+        v = ms.initVect(p.count);
+        if (!v.size())
+            v = ms.generateVect(p.count);
+    }
+
     int size = v.size();
 
     startAlgorithm = std::chrono::high_resolution_clock::now();
@@ -45,51 +54,12 @@ results ExecuteMerge::executeSingle(params p)
     return r;
 }
 
-void execM(std::vector<int> v)
+void execMulit(std::vector<int> v)
 {
     v = ms.mergeSort(v);
     myLock.lock();
     sortedVects.push_back(v);
-    //multiThreadVect = ms.merge(multiThreadVect,v);
     myLock.unlock();
-}
-
-std::vector<int> recMerge(std::vector<int> v)
-{
-    std::vector<int> result;
-    if (sortedVects.size() == 0)
-        return v;
-    else if (sortedVects.size() == 1) {
-        std::vector<int> right;
-        right = sortedVects.back();
-        sortedVects.pop_back();
-        result = ms.merge(v,right);
-    } else {
-        std::vector<int> left, right;
-        right = sortedVects.back();
-        sortedVects.pop_back();
-        left = sortedVects.back();
-        sortedVects.pop_back();
-
-        result = ms.merge(v,recMerge(ms.merge(left,right)));
-    }
-
-    std::cout << "HERE" << std::endl;
-    return result;
-}
-
-void recMerge2(int i,int incr)
-{
-    while (incr != sortedVects.size()) {
-        while (i != sortedVects.size()) {
-            sortedVects.at(i) = ms.merge(sortedVects.at(i),sortedVects.at(i+incr));
-            i = i + incr*2;
-        }
-        i = 0;
-        incr = incr*2;
-    }
-
-    return;
 }
 
 void threadMerge(int i, int incr)
@@ -97,6 +67,10 @@ void threadMerge(int i, int incr)
     sortedVects.at(i) = ms.merge(sortedVects.at(i),sortedVects.at(i+incr));
 }
 
+/*
+*   Note: This algorithm is far from optimal and makes very poor use of space.
+*         Count * p.threads space complexity to be exact
+*/
 results ExecuteMerge::executeMulti(params p)
 {
     results r;
@@ -104,11 +78,20 @@ results ExecuteMerge::executeMulti(params p)
     std::chrono::_V2::system_clock::time_point startFunction, stopFunction, startAlgorithm, stopAlgorithm;
     startFunction = std::chrono::high_resolution_clock::now();
 
-    std::vector<int> v = ms.generateVect(p.count);
+    std::vector<int> v;
+
+    if (p.generateNew)
+        v = ms.generateVect(p.count);
+    else {
+        v = ms.initVect(p.count);
+    }
+    
     int size = v.size();
 
+    if (p.count < p.threads)
+        p.threads = p.count;
+
     startAlgorithm = std::chrono::high_resolution_clock::now();
-    //v = ms.mergeSort(v);
 
     // Multithread
     std::vector<std::vector<int>> splits(p.threads);
@@ -117,8 +100,10 @@ results ExecuteMerge::executeMulti(params p)
     //std::cout << "splits size: " << splits.size() << std::endl;
 
     std::vector<std::thread> threads(p.threads);
+
+    // Sort p.threads sized lists individually
     for (int i = 0; i < p.threads; ++i) {
-        threads[i] = std::thread(execM,splits[i]);
+        threads[i] = std::thread(execMulit,splits[i]);
     }
 
     for (int i = 0; i < p.threads; ++i) {
@@ -127,13 +112,17 @@ results ExecuteMerge::executeMulti(params p)
 
     int incr = 1;
     int vectorSize = sortedVects.size();
+
+    // Merge the sorted lists back together with multithreading
     while (incr < vectorSize) {
         std::vector<std::thread> t(vectorSize);
         int i = 0;
         int d = 0;
         while (i < vectorSize) {
-            //sortedVects.at(i) = ms.merge(sortedVects.at(i),sortedVects.at(i+incr));
-            t[d] = std::thread(threadMerge,i,incr);
+            if (i + incr >= sortedVects.size())
+                break;
+            else
+                t[d] = std::thread(threadMerge,i,incr);
             i = i + incr*2;
             d++;
         }
@@ -144,16 +133,9 @@ results ExecuteMerge::executeMulti(params p)
         incr = incr*2;
     }
 
-    std::vector<int> a;
-    //a = recMerge(a);
-    //recMerge2(0,1);
-
-    // Multithread
-
     stopAlgorithm = std::chrono::high_resolution_clock::now();
 
     r.correct = ms.validateSorted(sortedVects.at(0),sortedVects.at(0).size());
-    //r.correct = ms.validateSorted(a,a.size());
 
     stopFunction = std::chrono::high_resolution_clock::now();
     auto durationAlgorithm = std::chrono::duration_cast<std::chrono::microseconds>(stopAlgorithm - startAlgorithm);

@@ -6,7 +6,9 @@
  * @author: Dan Sager
  */
 
+#include <fstream>
 #include <iostream>
+#include <sstream>
 #include <stdlib.h>
 #include <semaphore.h> //linux only
 #include "MergeSort.hpp"
@@ -70,6 +72,10 @@ std::vector<int> MergeSort::mergeSort(std::vector<int> vect)
 
 std::vector<int> MergeSort::generateVect(int size)
 {
+    std::ofstream log;
+    log.open(LOGFILE);
+    log << "# Generate input of size: " << size << "\n";
+
     std::vector<int> intVect(size);
     srand(time(NULL));
     int i = 0;
@@ -77,8 +83,36 @@ std::vector<int> MergeSort::generateVect(int size)
         int randInt = rand() % MAX_INT; // can be any 0-65535
         intVect[i] = randInt;
         i++;
+
+        log << randInt << " ";
     }
+    log.close();
     return intVect;
+}
+
+std::vector<int> MergeSort::initVect(int size)
+{
+    std::vector<int> inpVect;
+
+    // Load Input Values
+    std::ifstream inpFile(LOGFILE);
+    std::string inpLine;
+    while (std::getline(inpFile, inpLine)) {
+        if (inpLine[0] == '#') continue;
+        if (inpLine[0] == '\n') continue;
+        std::stringstream strStream(inpLine);
+        std::string temp;
+        int num = 0;
+        while (!strStream.eof() && num < size) { 
+            int val = -1;
+            strStream >> val;
+            if (val != -1)
+                inpVect.push_back(val);
+            num++;
+        }
+    }
+
+    return inpVect;
 }
 
 int MergeSort::validateSorted(std::vector<int> v, int size)

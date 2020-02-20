@@ -1,0 +1,288 @@
+Executing version 0.4 at Thu Feb 20 17:12:04 2020
+Parameters: algo = 2, count = 1000, threads = 16, threadpool = 0, generate = 0
+2612 microseconds - Time taken by the algorithm.
+2664 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 1000, Total Files: 1000
+
+Executing version 0.4 at Thu Feb 20 17:21:32 2020
+Parameters: algo = 2, count = 1000, threads = 16, threadpool = 0, generate = 0
+2855 microseconds - Time taken by the algorithm.
+3195 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 1000, Total Files: 1000
+
+Executing version 0.4 at Thu Feb 20 17:22:15 2020
+Parameters: algo = 2, count = 1000, threads = 16, threadpool = 0, generate = 0
+2586 microseconds - Time taken by the algorithm.
+2854 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 1000, Total Files: 1000
+
+Executing version 0.4 at Thu Feb 20 17:23:23 2020
+Parameters: algo = 2, count = 1000, threads = 16, threadpool = 0, generate = 0
+2750 microseconds - Time taken by the algorithm.
+3134 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 1000, Total Files: 1000
+
+Executing version 0.4 at Thu Feb 20 17:23:26 2020
+Parameters: algo = 2, count = 1000, threads = 16, threadpool = 0, generate = 0
+2651 microseconds - Time taken by the algorithm.
+3100 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 1000, Total Files: 1000
+
+Executing version 0.4 at Thu Feb 20 17:23:30 2020
+Parameters: algo = 2, count = 100, threads = 16, threadpool = 0, generate = 0
+1304 microseconds - Time taken by the algorithm.
+1499 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 100, Total Files: 100
+
+Executing version 0.4 at Thu Feb 20 17:23:43 2020
+Parameters: algo = 2, count = 10, threads = 8, threadpool = 0, generate = 0
+579 microseconds - Time taken by the algorithm.
+886 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:26:32 2020
+Parameters: algo = 2, count = 10, threads = 16, threadpool = 0, generate = 0
+723 microseconds - Time taken by the algorithm.
+870 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:27:32 2020
+Parameters: algo = 2, count = 10, threads = 16, threadpool = 0, generate = 0
+867 microseconds - Time taken by the algorithm.
+1025 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:27:56 2020
+Parameters: algo = 2, count = 10, threads = 16, threadpool = 0, generate = 0
+659 microseconds - Time taken by the algorithm.
+790 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:29:05 2020
+Parameters: algo = 2, count = 10, threads = 16, threadpool = 0, generate = 0
+642 microseconds - Time taken by the algorithm.
+780 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:29:08 2020
+Parameters: algo = 2, count = 10, threads = 16, threadpool = 0, generate = 0
+619 microseconds - Time taken by the algorithm.
+761 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:29:09 2020
+Parameters: algo = 2, count = 10, threads = 16, threadpool = 0, generate = 0
+604 microseconds - Time taken by the algorithm.
+738 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:29:10 2020
+Parameters: algo = 2, count = 10, threads = 16, threadpool = 0, generate = 0
+633 microseconds - Time taken by the algorithm.
+775 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:29:11 2020
+Parameters: algo = 2, count = 10, threads = 16, threadpool = 0, generate = 0
+648 microseconds - Time taken by the algorithm.
+803 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:29:11 2020
+Parameters: algo = 2, count = 10, threads = 16, threadpool = 0, generate = 0
+872 microseconds - Time taken by the algorithm.
+1013 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:29:12 2020
+Parameters: algo = 2, count = 10, threads = 16, threadpool = 0, generate = 0
+623 microseconds - Time taken by the algorithm.
+757 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:10 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 0
+56 microseconds - Time taken by the algorithm.
+101 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:15 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 1
+73 microseconds - Time taken by the algorithm.
+212 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:29 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 0
+58 microseconds - Time taken by the algorithm.
+103 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:30 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 0
+69 microseconds - Time taken by the algorithm.
+114 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:30 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 0
+58 microseconds - Time taken by the algorithm.
+100 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:31 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 0
+57 microseconds - Time taken by the algorithm.
+103 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:31 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 0
+57 microseconds - Time taken by the algorithm.
+99 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:32 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 0
+57 microseconds - Time taken by the algorithm.
+101 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:33 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 0
+58 microseconds - Time taken by the algorithm.
+103 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:33 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 0
+56 microseconds - Time taken by the algorithm.
+98 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:39 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 1
+61 microseconds - Time taken by the algorithm.
+202 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:40 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 1
+71 microseconds - Time taken by the algorithm.
+211 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:41 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 1
+95 microseconds - Time taken by the algorithm.
+262 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:41 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 1
+79 microseconds - Time taken by the algorithm.
+233 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:42 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 1
+91 microseconds - Time taken by the algorithm.
+269 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:42 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 1
+91 microseconds - Time taken by the algorithm.
+259 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:43 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 1
+70 microseconds - Time taken by the algorithm.
+206 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:39:47 2020
+Parameters: algo = 2, count = 100, threads = 1, threadpool = 0, generate = 1
+828 microseconds - Time taken by the algorithm.
+1002 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 100, Total Files: 100
+
+Executing version 0.4 at Thu Feb 20 17:39:54 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 0
+694 microseconds - Time taken by the algorithm.
+753 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 100, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:42:19 2020
+Parameters: algo = 2, count = 10, threads = 1, threadpool = 0, generate = 0
+68 microseconds - Time taken by the algorithm.
+116 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 10, Total Files: 10
+
+Executing version 0.4 at Thu Feb 20 17:42:28 2020
+Parameters: algo = 2, count = 50, threads = 1, threadpool = 0, generate = 0
+322 microseconds - Time taken by the algorithm.
+378 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 50, Total Files: 50
+
+Executing version 0.4 at Thu Feb 20 17:42:33 2020
+Parameters: algo = 2, count = 99, threads = 1, threadpool = 0, generate = 0
+827 microseconds - Time taken by the algorithm.
+900 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 99, Total Files: 99
+
+Executing version 0.4 at Thu Feb 20 17:42:37 2020
+Parameters: algo = 2, count = 100, threads = 1, threadpool = 0, generate = 0
+697 microseconds - Time taken by the algorithm.
+755 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 100, Total Files: 100
+
+Executing version 0.4 at Thu Feb 20 17:42:40 2020
+Parameters: algo = 2, count = 101, threads = 1, threadpool = 0, generate = 0
+673 microseconds - Time taken by the algorithm.
+733 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 100, Total Files: 101
+
+Executing version 0.4 at Thu Feb 20 17:42:49 2020
+Parameters: algo = 2, count = 101, threads = 1, threadpool = 0, generate = 1
+713 microseconds - Time taken by the algorithm.
+879 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 101, Total Files: 101
+
+Executing version 0.4 at Thu Feb 20 17:43:27 2020
+Parameters: algo = 2, count = 101, threads = 1, threadpool = 0, generate = 0
+844 microseconds - Time taken by the algorithm.
+912 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 101, Total Files: 101
+
+Executing version 0.4 at Thu Feb 20 17:43:34 2020
+Parameters: algo = 2, count = 101, threads = 1, threadpool = 0, generate = 0
+810 microseconds - Time taken by the algorithm.
+883 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 101, Total Files: 101
+
+Executing version 0.4 at Thu Feb 20 17:43:50 2020
+Parameters: algo = 2, count = 101, threads = 1, threadpool = 0, generate = 0
+1 microseconds - Time taken by the algorithm.
+17 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 0, Total Files: 101
+
+Executing version 0.4 at Thu Feb 20 17:45:03 2020
+Parameters: algo = 2, count = 101, threads = 1, threadpool = 0, generate = 0
+1 microseconds - Time taken by the algorithm.
+23 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 0, Total Files: 101
+
+Executing version 0.4 at Thu Feb 20 17:45:18 2020
+Parameters: algo = 2, count = 101, threads = 1, threadpool = 0, generate = 0
+1 microseconds - Time taken by the algorithm.
+21 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 0, Total Files: 101
+
+Executing version 0.4 at Thu Feb 20 17:45:23 2020
+Parameters: algo = 2, count = 101, threads = 1, threadpool = 0, generate = 0
+717 microseconds - Time taken by the algorithm.
+823 microseconds - Time taken to execute algorithm & supporting functions.
+Correct: 101, Total Files: 101
+

@@ -11,8 +11,7 @@
 
 #include <chrono>
 
-const float VERSION_NUM = 0.3;
-const std::string LOGFILE = "log.txt";
+const std::string VERSION_NUM = "0.5";
 const std::string COINSINPUTFILE = "./coins/inputs.txt";
 const std::string COINSANSWERFILE = "./coins/answers.txt";
 

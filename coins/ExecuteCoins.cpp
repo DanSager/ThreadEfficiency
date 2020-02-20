@@ -39,6 +39,8 @@ results ExecuteCoins::initializeSingle(params p)
     if (p.generateNew) twelvecoins.generate(p.count);
     std::vector<std::vector<int>> inpVect = twelvecoins.initInput();
     std::vector<coin> ansVect = twelvecoins.initAnswers();
+    if (!inpVect.size() || !ansVect.size())
+        twelvecoins.generate(p.count);
     int size = std::min((int)ansVect.size(),p.count);
 
     // Execute the algo
